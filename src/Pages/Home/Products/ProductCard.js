@@ -2,7 +2,6 @@ import React from 'react';
 import star from './assets/Group 46.png';
 
 const ProductCard = ({ product }) => {
-    console.log(product)
     const { name, price, img } = product;
     return (
         <div className="card card-compact w-96 bg-base-100 shadow-xl flex justify-center align-middle">

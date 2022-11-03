@@ -15,8 +15,6 @@ const Checkout = () => {
         const phone = form.phone.value;
         const message = form.message.value || 'No Message';
 
-        console.log(name, email, phone, message)
-
         if (phone.length < 10) {
             return alert('Phone Number must be contains 10 or more characters')
         }
@@ -41,7 +39,6 @@ const Checkout = () => {
             })
                 .then(res => res.json())
                 .then(data => {
-                    console.log(data)
                     if (data.acknowledged) {
                         alert("You have successfully Purchased The Service!")
                         form.reset()
