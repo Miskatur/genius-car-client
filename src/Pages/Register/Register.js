@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import loginPic from '../../assets/images/login/login.svg'
 import { FaGoogle, FaFacebook, FaTwitter } from "react-icons/fa";
 import { AuthContext } from '../../Context/AuthProvider/AuthProvider';
 
 const Register = () => {
+    const navigate = useNavigate();
 
     const { createUser, updateUser } = useContext(AuthContext)
 
@@ -21,6 +22,8 @@ const Register = () => {
                 console.log(user)
                 form.reset()
                 handleUpdateUser(name)
+                navigate('/')
+
             })
             .catch(err => console.error(err))
     }
@@ -56,9 +59,9 @@ const Register = () => {
                                 </div>
                                 <div className="form-control">
                                     <label className="label">
-                                        <span className="label-text">Confirm Password</span>
+                                        <span className="label-text">Password</span>
                                     </label>
-                                    <input type="text" name='password' placeholder="password" className="input input-bordered" />
+                                    <input type="password" name='password' placeholder="password" className="input input-bordered" />
                                     <label className="label">
                                         <Link href="#" className="label-text-alt link link-hover">Forgot password?</Link>
                                     </label>

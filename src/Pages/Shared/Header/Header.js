@@ -15,12 +15,14 @@ const Header = () => {
     const menuItems = <>
         <li className='font-semibold'><Link to={'/'}>Home</Link></li>
         <li className='font-semibold'><Link to={'/services'}>Services</Link></li>
-        <li className='font-semibold'><Link to={'/orders'}>Orders</Link></li>
         <li className='font-semibold'><Link to={'/contact'}>Contact</Link></li>
         {
             user?.uid ?
-
-                <li className='font-semibold'><Link onClick={handleLogout}>Log Out</Link></li> :
+                <>
+                    <li className='font-semibold'><Link to={'/orders'}>Orders</Link></li>
+                    <li className='font-semibold'><Link onClick={handleLogout}>Log Out</Link></li>
+                </>
+                :
                 <li className='font-semibold'><Link to={'/login'}>Login</Link></li>}
     </>
 
