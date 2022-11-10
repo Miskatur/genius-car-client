@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import loginPic from '../../assets/images/login/login.svg'
 import { FaGoogle, FaFacebook, FaTwitter } from "react-icons/fa";
 import { AuthContext } from '../../Context/AuthProvider/AuthProvider';
+import { setAuthToken } from '../../Utilities/auth';
 
 const Register = () => {
     const navigate = useNavigate();
@@ -22,6 +23,7 @@ const Register = () => {
                 console.log(user)
                 form.reset()
                 handleUpdateUser(name)
+                setAuthToken(user)
                 navigate('/')
 
             })
@@ -30,7 +32,10 @@ const Register = () => {
 
     const handleUpdateUser = name => {
         updateUser(name)
-            .then(() => { })
+            .then(res => {
+                const user = res.user;
+                console.log(user)
+            })
             .catch(err => console.error(err))
     }
 

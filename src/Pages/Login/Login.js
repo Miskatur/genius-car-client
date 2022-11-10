@@ -3,6 +3,8 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import loginPic from '../../assets/images/login/login.svg'
 import { FaGoogle, FaFacebook, FaTwitter } from "react-icons/fa";
 import { AuthContext } from '../../Context/AuthProvider/AuthProvider';
+import { GoogleAuthProvider } from 'firebase/auth';
+import { setAuthToken } from '../../Utilities/auth';
 
 
 const Login = () => {
@@ -10,7 +12,8 @@ const Login = () => {
     const navigate = useNavigate();
     const from = location.state?.from?.pathname || "/";
 
-    const { userSignIn } = useContext(AuthContext);
+    const { userSignIn, signInwithProvider } = useContext(AuthContext);
+    const googleProvider = new GoogleAuthProvider();
 
     const handleLogin = event => {
         event.preventDefault()
@@ -25,7 +28,7 @@ const Login = () => {
                 }
 
                 //get JWT token
-                fetch(`http://localhost:5000/jwt`, {
+                fetch(`https://genius-car-server-sigma-two.vercel.app/jwt`, {
                     method: 'POST',
                     headers: {
                         "content-type": "application/json"
@@ -40,6 +43,21 @@ const Login = () => {
                     })
 
                 form.reset()
+            })
+            .catch(err => console.error(err))
+    }
+
+
+    const handleGoogleSignIn = () => {
+        signInwithProvider(googleProvider)
+            .then(res => {
+                const user = res.user;
+                console.log(user)
+
+                setAuthToken(user)
+                navigate(from, { replace: true })
+
+
             })
             .catch(err => console.error(err))
     }
@@ -80,7 +98,7 @@ const Login = () => {
                                 <div className='flex justify-center py-5 align-middle'>
                                     <button><FaFacebook className='text-xl mr-5' /></button>
                                     <button> <FaTwitter className='text-xl mr-5' /></button>
-                                    <button> <FaGoogle className='text-xl' /></button>
+                                    <button> <FaGoogle className='text-xl' onClick={handleGoogleSignIn} /></button>
                                 </div>
                                 <p>New to Genius car? <Link to={'/register'} className="text-color-custom"> Sign Up </Link></p>
                             </div>
